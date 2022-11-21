@@ -45,10 +45,14 @@ class CreateProductView(generic.TemplateView):
                 p_img = ProductImage(**prod_imgInfo)
                 p_img.save()
             
+            # need to show request data 
             # if variant:
             #     variantInfo = {
             #         ''
             #     }
+
+            # if product_variant_price:
+            #     pass 
 
             return HttpResponse('successfully saved.')
         return HttpResponse('method error to save')
