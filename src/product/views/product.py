@@ -2,6 +2,7 @@ from django.views import generic
 from django.db.models import Q
 from django.db.models import Max
 from datetime import date
+from django.views.generic.base import TemplateView 
 
 from product.models import Variant, Product,ProductImage, ProductVariant
 
@@ -19,8 +20,38 @@ class CreateProductView(generic.TemplateView):
         return context
 
     def post(self,request, **kwargs):
-        print('hello')
-        print(request.POST)
+       
+        if request.method == 'POST':
+            title = request.POST['title']
+            sku = request.POST['sku']
+            des = request.POST['description']
+            pro_img = request.POST['product_image']
+            variant = request.POST['product_variant']
+            vari_price = request.POST['product_variant_prices']
+
+            productInfo = {
+                'title':title,
+                'sku':sku,
+                'description':des
+            }
+            prod = Product(**productInfo)
+            prod.save()
+
+            if pro_img:
+                prod_imgInfo = {
+                    'product':prod.id,
+                    'file_path':pro_img
+                }
+                p_img = ProductImage(**prod_imgInfo)
+                p_img.save()
+            
+            # if variant:
+            #     variantInfo = {
+            #         ''
+            #     }
+
+            return HttpResponse('successfully saved.')
+        return HttpResponse('method error to save')
 
 
 # product list logic 
