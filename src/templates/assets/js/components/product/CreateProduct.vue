@@ -49,7 +49,7 @@
               </div>
               <div class="col-md-8">
                 <div class="form-group">
-                  <label v-if="product_variant.length != 1" @click="product_variant.splice(index,1) checkVariant"
+                  <label v-if="product_variant.length != 1" @click="product_variant.splice(index,1); checkVariant"
                          class="float-right text-primary"
                          style="cursor: pointer;">Remove</label>
                   <label v-else for="">.</label>
@@ -189,8 +189,7 @@ export default {
         product_variant_prices: this.product_variant_prices
       }
 
-
-      axios.post('http://127.0.0.1:8000/product/create/', product).then(response => {
+      axios.post('/product/create/', product).then(response => {
         console.log(response.data);
       }).catch(error => {
         console.log(error);

@@ -7,8 +7,11 @@ from django.views.generic.base import TemplateView
 from product.models import Variant, Product,ProductImage, ProductVariant
 
 from django.shortcuts import render, redirect, HttpResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class CreateProductView(generic.TemplateView):
     template_name = 'products/create.html'
 
@@ -19,9 +22,12 @@ class CreateProductView(generic.TemplateView):
         context['variants'] = list(variants.all())
         return context
 
-    def post(self,request, **kwargs):
-       
-        if request.method == 'POST':
+    def post(self,request,*args, **kwargs):
+        print(self)
+        print(request)
+        print(request.POST)
+
+        if request.POST:
             title = request.POST['title']
             sku = request.POST['sku']
             des = request.POST['description']
