@@ -12,7 +12,7 @@ from django.utils.decorators import method_decorator
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class CreateProductView(generic.TemplateView):
+class CreateProductView(TemplateView):
     template_name = 'products/create.html'
 
     def get_context_data(self, **kwargs):
@@ -22,6 +22,10 @@ class CreateProductView(generic.TemplateView):
         context['variants'] = list(variants.all())
         return context
 
+    # error to get request data from vue post request 
+    # never use vue and react with django in a same project 
+    # thank you 
+    
     def post(self,request,*args, **kwargs):
         print(self)
         print(request)
